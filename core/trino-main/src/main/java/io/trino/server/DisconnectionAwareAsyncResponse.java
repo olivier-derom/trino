@@ -164,7 +164,12 @@ public class DisconnectionAwareAsyncResponse
     @Override
     public void setTimeoutHandler(TimeoutHandler handler)
     {
-        delegate.setTimeoutHandler(handler);
+        delegate.setTimeoutHandler(asyncResponse -> {
+            if (clientDisconnected.get()) {
+                return;
+            }
+            handler.handleTimeout(asyncResponse);
+        });
     }
 
     @Override
