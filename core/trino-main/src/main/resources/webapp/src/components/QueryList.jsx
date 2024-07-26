@@ -151,6 +151,11 @@ export class QueryListItem extends React.Component {
                                    title="Query JSON">
                                     <span className="glyphicon glyphicon-save-file" style={GLYPHICON_DEFAULT}/>
                                 </a>&nbsp;
+                                <a href={"/ui/api/query/" + query.queryId + "/explain"} target="_blank"
+                                   data-toggle="tooltip" data-placement="bottom" data-trigger="hover"
+                                   title="Query explain plan">
+                                    <span className="glyphicon glyphicon-eye-open" style={GLYPHICON_DEFAULT}/>
+                                </a>&nbsp;
                                 <a href={"stage.html?" + query.queryId}
                                    data-toggle="tooltip" data-placement="bottom" data-trigger="hover"
                                    title="Stage performance">
