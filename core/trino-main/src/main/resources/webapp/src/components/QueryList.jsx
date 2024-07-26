@@ -29,6 +29,8 @@ import {
     truncateString
 } from "../utils";
 
+import { SqlBlock } from "./SqlBlock";
+
 export class QueryListItem extends React.Component {
     static stripQueryTextWhitespace(queryText) {
         const maxLines = 6;
@@ -194,7 +196,7 @@ export class QueryListItem extends React.Component {
                         </div>
                         <div className="row query-row-bottom">
                             <div className="col-xs-12">
-                                <pre className="query-snippet"><code className="sql">{QueryListItem.stripQueryTextWhitespace(query.queryTextPreview)}</code></pre>
+                                <pre className="query-snippet"><SqlBlock code={QueryListItem.stripQueryTextWhitespace(query.queryTextPreview)} /></pre>
                             </div>
                         </div>
                     </div>
