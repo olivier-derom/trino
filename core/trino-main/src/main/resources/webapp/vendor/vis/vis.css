@@ -254,7 +254,7 @@
 }
 
 .vis.timeline .item .delete {
-  background: url('img/timeline/delete.png') no-repeat top center;
+  background: url('dist/img/timeline/delete.png') no-repeat top center;
   position: absolute;
   width: 24px;
   height: 24px;
@@ -628,7 +628,7 @@ div.network-manipulation-closeDiv {
 
   background-position: 20px 3px;
   background-repeat: no-repeat;
-  background-image: url("img/network/cross.png");
+  background-image: url("dist/img/network/cross.png");
   cursor: pointer;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -674,7 +674,7 @@ div.network-manipulationUI:active {
 }
 
 div.network-manipulationUI.back {
-  background-image: url("img/network/backIcon.png");
+  background-image: url("dist/img/network/backIcon.png");
 }
 
 div.network-manipulationUI.none:hover {
@@ -693,11 +693,11 @@ div.network-manipulationUI.notification{
 }
 
 div.network-manipulationUI.add {
-  background-image: url("img/network/addNodeIcon.png");
+  background-image: url("dist/img/network/addNodeIcon.png");
 }
 
 div.network-manipulationUI.edit {
-  background-image: url("img/network/editIcon.png");
+  background-image: url("dist/img/network/editIcon.png");
 }
 
 div.network-manipulationUI.edit.editmode {
@@ -708,11 +708,11 @@ div.network-manipulationUI.edit.editmode {
 }
 
 div.network-manipulationUI.connect {
-  background-image: url("img/network/connectIcon.png");
+  background-image: url("dist/img/network/connectIcon.png");
 }
 
 div.network-manipulationUI.delete {
-  background-image: url("img/network/deleteIcon.png");
+  background-image: url("dist/img/network/deleteIcon.png");
 }
 /* top right bottom left */
 div.network-manipulationLabel {
@@ -761,37 +761,37 @@ div.network-navigation:active {
 }
 
 div.network-navigation.up {
-    background-image: url("img/network/upArrow.png");
+    background-image: url("dist/img/network/upArrow.png");
     bottom:50px;
     left:55px;
 }
 div.network-navigation.down {
-    background-image: url("img/network/downArrow.png");
+    background-image: url("dist/img/network/downArrow.png");
     bottom:10px;
     left:55px;
 }
 div.network-navigation.left {
-    background-image: url("img/network/leftArrow.png");
+    background-image: url("dist/img/network/leftArrow.png");
     bottom:10px;
     left:15px;
 }
 div.network-navigation.right {
-    background-image: url("img/network/rightArrow.png");
+    background-image: url("dist/img/network/rightArrow.png");
     bottom:10px;
     left:95px;
 }
 div.network-navigation.zoomIn {
-    background-image: url("img/network/plus.png");
+    background-image: url("dist/img/network/plus.png");
     bottom:10px;
     right:15px;
 }
 div.network-navigation.zoomOut {
-    background-image: url("img/network/minus.png");
+    background-image: url("dist/img/network/minus.png");
     bottom:10px;
     right:55px;
 }
 div.network-navigation.zoomExtends {
-    background-image: url("img/network/zoomExtends.png");
+    background-image: url("dist/img/network/zoomExtends.png");
     bottom:50px;
     right:15px;
 }
