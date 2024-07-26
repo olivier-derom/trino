@@ -73,6 +73,12 @@ public class InternalCommunicationHttpClientModule
     static void configureClient(HttpClientConfig httpConfig, InternalCommunicationConfig internalCommunicationConfig)
     {
         httpConfig.setHttp2Enabled(internalCommunicationConfig.isHttp2Enabled());
+
+        if (internalCommunicationConfig.isHttp2Enabled()) {
+            httpConfig.setMaxConnectionsPerServer(httpConfig.getMaxThreads());
+            httpConfig.setMaxRequestsQueuedPerDestination(2048);
+        }
+
         if (internalCommunicationConfig.isHttpsRequired() && internalCommunicationConfig.getKeyStorePath() == null && internalCommunicationConfig.getTrustStorePath() == null) {
             configureClientForAutomaticHttps(httpConfig, internalCommunicationConfig);
         }
