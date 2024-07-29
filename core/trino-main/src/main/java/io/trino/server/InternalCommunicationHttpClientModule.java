@@ -78,6 +78,7 @@ public class InternalCommunicationHttpClientModule
             httpConfig.setMaxThreads(Runtime.getRuntime().availableProcessors());
             httpConfig.setMaxConnectionsPerServer(httpConfig.getMaxThreads());
             httpConfig.setMaxRequestsQueuedPerDestination(32 * 1024);
+            httpConfig.setLogHistory(0);
         }
 
         if (internalCommunicationConfig.isHttpsRequired() && internalCommunicationConfig.getKeyStorePath() == null && internalCommunicationConfig.getTrustStorePath() == null) {
