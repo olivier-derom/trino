@@ -15,6 +15,7 @@ package io.trino.server;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import io.airlift.jaxrs.AsyncResponseHandler;
+import io.airlift.log.Logger;
 import jakarta.servlet.AsyncContext;
 import jakarta.servlet.AsyncEvent;
 import jakarta.servlet.AsyncListener;
@@ -40,6 +41,8 @@ import static java.util.Objects.requireNonNull;
 public class DisconnectionAwareAsyncResponse
         implements AsyncResponse
 {
+    private static final Logger log = Logger.get(DisconnectionAwareAsyncResponse.class);
+
     // Guards against calling AsyncResponse methods when client is no longer interested in consuming a response
     private final AtomicBoolean terminated = new AtomicBoolean();
 
@@ -64,12 +67,14 @@ public class DisconnectionAwareAsyncResponse
             @Override
             public void onTimeout(AsyncEvent event)
             {
+                log.info("async request timed out context:" + event.getAsyncContext());
                 terminate();
             }
 
             @Override
             public void onError(AsyncEvent event)
             {
+                log.info("async request errored context:" + event.getAsyncContext() + " error: " + event.getThrowable());
                 if (wasRequestTerminated(event.getThrowable())) {
                     terminate();
                 }
