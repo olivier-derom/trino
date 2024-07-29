@@ -75,7 +75,8 @@ public class InternalCommunicationHttpClientModule
         httpConfig.setHttp2Enabled(internalCommunicationConfig.isHttp2Enabled());
 
         if (internalCommunicationConfig.isHttp2Enabled()) {
-            httpConfig.setMaxThreads(Runtime.getRuntime().availableProcessors());
+            httpConfig.setMinThreads(Runtime.getRuntime().availableProcessors() * 2);
+            httpConfig.setMaxThreads(Runtime.getRuntime().availableProcessors() * 2);
             httpConfig.setMaxConnectionsPerServer(httpConfig.getMaxThreads());
             httpConfig.setMaxRequestsQueuedPerDestination(32 * 1024);
             httpConfig.setLogHistory(0);
