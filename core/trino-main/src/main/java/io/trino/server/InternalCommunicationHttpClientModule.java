@@ -75,8 +75,9 @@ public class InternalCommunicationHttpClientModule
         httpConfig.setHttp2Enabled(internalCommunicationConfig.isHttp2Enabled());
 
         if (internalCommunicationConfig.isHttp2Enabled()) {
+            httpConfig.setMaxThreads(Runtime.getRuntime().availableProcessors());
             httpConfig.setMaxConnectionsPerServer(httpConfig.getMaxThreads());
-            httpConfig.setMaxRequestsQueuedPerDestination(2048);
+            httpConfig.setMaxRequestsQueuedPerDestination(32 * 1024);
         }
 
         if (internalCommunicationConfig.isHttpsRequired() && internalCommunicationConfig.getKeyStorePath() == null && internalCommunicationConfig.getTrustStorePath() == null) {
