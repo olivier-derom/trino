@@ -21,7 +21,7 @@ import io.trino.plugin.deltalake.transactionlog.DeletionVectorEntry;
 import io.trino.spi.TrinoException;
 import org.roaringbitmap.RoaringBitmap;
 import org.roaringbitmap.longlong.LongBitmapDataProvider;
-import org.roaringbitmap.longlong.Roaring64NavigableMap;
+import org.roaringbitmap.longlong.Roaring64Bitmap;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -57,13 +57,13 @@ public final class DeletionVectors
 
     private DeletionVectors() {}
 
-    public static Roaring64NavigableMap readDeletionVectors(TrinoFileSystem fileSystem, Location location, DeletionVectorEntry deletionVector)
+    public static Roaring64Bitmap readDeletionVectors(TrinoFileSystem fileSystem, Location location, DeletionVectorEntry deletionVector)
             throws IOException
     {
         if (deletionVector.storageType().equals(UUID_MARKER)) {
             TrinoInputFile inputFile = fileSystem.newInputFile(location.appendPath(toFileName(deletionVector.pathOrInlineDv())));
             byte[] buffer = readDeletionVector(inputFile, deletionVector.offset().orElseThrow(), deletionVector.sizeInBytes());
-            Roaring64NavigableMap bitmaps = deserializeDeletionVectors(buffer);
+            Roaring64Bitmap bitmaps = deserializeDeletionVectors(buffer);
             if (bitmaps.getLongCardinality() != deletionVector.cardinality()) {
                 throw new TrinoException(DELTA_LAKE_INVALID_SCHEMA, "The number of deleted rows expects %s but got %s".formatted(deletionVector.cardinality(), bitmaps.getLongCardinality()));
             }
@@ -78,7 +78,7 @@ public final class DeletionVectors
     public static DeletionVectorEntry writeDeletionVectors(
             TrinoFileSystem fileSystem,
             Location location,
-            Roaring64NavigableMap pastDeletionVectors,
+            Roaring64Bitmap pastDeletionVectors,
             LongBitmapDataProvider rowsDeletedByDelete,
             LongBitmapDataProvider rowsDeletedByUpdate)
             throws IOException
@@ -116,7 +116,7 @@ public final class DeletionVectors
         return buffer.array();
     }
 
-    private static RoaringBitmap toRoaringBitmap(Roaring64NavigableMap pastDeletionVectors, LongBitmapDataProvider rowsDeletedByDelete, LongBitmapDataProvider rowsDeletedByUpdate)
+    private static RoaringBitmap toRoaringBitmap(Roaring64Bitmap pastDeletionVectors, LongBitmapDataProvider rowsDeletedByDelete, LongBitmapDataProvider rowsDeletedByUpdate)
     {
         RoaringBitmap roaringBitmap = new RoaringBitmap();
         pastDeletionVectors.forEach(position -> roaringBitmap.add(toIntExact(position)));
@@ -164,7 +164,7 @@ public final class DeletionVectors
         return (int) crc.getValue();
     }
 
-    private static Roaring64NavigableMap deserializeDeletionVectors(byte[] bytes)
+    private static Roaring64Bitmap deserializeDeletionVectors(byte[] bytes)
             throws IOException
     {
         ByteBuffer buffer = ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN);
@@ -172,7 +172,7 @@ public final class DeletionVectors
         int magicNumber = buffer.getInt();
         if (magicNumber == PORTABLE_ROARING_BITMAP_MAGIC_NUMBER) {
             int size = toIntExact(buffer.getLong());
-            Roaring64NavigableMap bitmaps = new Roaring64NavigableMap();
+            Roaring64Bitmap bitmaps = new Roaring64Bitmap();
             for (int i = 0; i < size; i++) {
                 int key = buffer.getInt();
                 checkArgument(key >= 0, "key must not be negative: %s", key);
