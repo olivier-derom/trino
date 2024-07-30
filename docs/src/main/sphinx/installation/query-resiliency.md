@@ -70,13 +70,13 @@ fault-tolerant execution with an S3-based exchange:
    ```yaml
    server:
      exchangeManager:
-       name=filesystem
-       base-directories=s3://exchange-spooling-bucket-1,s3://exchange-spooling-bucket-2
+       name: "filesystem"
+       baseDir: "s3://exchange-spooling-bucket-1,s3://exchange-spooling-bucket-2"
 
    additionalExchangeManagerProperties:
-     exchange.s3.region=us-west-1
-     exchange.s3.aws-access-key=example-access-key
-     exchange.s3.aws-secret-key=example-secret-key
+     - "exchange.s3.region=us-west-1"
+     - "exchange.s3.aws-access-key=example-access-key"
+     - "exchange.s3.aws-secret-key=example-secret-key"
    ```
 
    In non-Kubernetes installations, the same properties must be defined in an
@@ -88,7 +88,7 @@ fault-tolerant execution with an S3-based exchange:
 
    ```yaml
    additionalConfigProperties:
-     retry-policy=TASK
+     - "retry-policy=TASK"
    ```
 
    In non-Kubernetes installations, the same property must be defined in the
